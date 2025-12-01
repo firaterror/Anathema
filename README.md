@@ -19,7 +19,3 @@ Here’s the exact pipeline the tool runs every hour:
 7. Send notifications
 
 ```
-
-
-
-This ensures maximum speed + early detection.
