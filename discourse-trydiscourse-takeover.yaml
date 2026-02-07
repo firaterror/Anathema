@@ -1,0 +1,30 @@
+id: discourse-trydiscourse-takeover
+
+info:
+  name: Discourse TryDiscourse Subdomain Takeover
+  author: Firat 
+  severity: high
+  description: |
+    Detects potential subdomain takeover vulnerabilities for services
+    pointing to *.trydiscourse.com that return NXDOMAIN.
+  tags: dns,takeover,discourse,trydiscourse
+
+dns:
+  - name: "{{FQDN}}"
+    type: A
+    class: inet
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "NXDOMAIN"
+
+      - type: dsl
+        dsl:
+          - 'contains(cname, "trydiscourse.com")'
+
+    extractors:
+      - type: dsl
+        dsl:
+          - cname

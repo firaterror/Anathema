@@ -1,0 +1,28 @@
+id: detect-dangling-nameserver
+
+info:
+  name: Detect Dangling Nameserver
+  author: firat
+  severity: high
+  description: Detects dangling or misconfigured nameservers returning REFUSED or SERVFAIL, which may indicate DNS misconfiguration or takeover potential.
+  tags: dns,takeover,nameserver,misconfiguration
+
+dns:
+  - name: "{{FQDN}}"
+    type: A
+
+    matchers-condition: or
+    matchers:
+
+      # --- RCODE-Based Matching (Guaranteed) ---
+      - type: status
+        status:
+          - 2    # SERVFAIL
+          - 5    # REFUSED
+
+      # --- Text-Based Matching (Resolver-dependent) ---
+      - type: word
+        words:
+          - "SERVFAIL"
+          - "REFUSED"
+        condition: or

@@ -1,0 +1,25 @@
+id: brandpad-takeover
+
+info:
+  name: Brandpad Subdomain Takeover
+  author: firat
+  severity: high
+  description: Possible Brandpad subdomain takeover. The service responds with a known unclaimed project message.
+  reference:
+    - https://github.com/EdOverflow/can-i-take-over-xyz
+  tags: takeover,brandpad,http
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: word
+        words:
+          - "Sorry, that page doesn't exist."
+
+    extractors:
+      - type: dsl
+        dsl:
+          - cname
